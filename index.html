@@ -10,7 +10,8 @@
   </h1>
   <div id="container" style="display: grid;
                               grid-template-columns: repeat(4, 1fr);
-                              grid-gap: 5px;"></div>
+                              grid-gap: 5px;">
+                              </div>
   <script>
     const container = document.querySelector('#container');
     function addDivGrid(){
@@ -28,12 +29,14 @@
         }
         else column++;
 
-        divs.push('div'+i);
+        //divs.push('div'+i);
         divs[i] = document.createElement('div');
         divs[i].classList.add('grid');
-        divs[i].style.cssText = 'width: 5px; background: pink; border: 1px solid black';
-        divs[i].style.cssText = 'grid-column: ' + column;
-        divs[i].style.cssText = 'grid-row: ' + row;
+        divs[i].setAttribute ('style', 
+          'background: blue;' +
+          'border: 1px solid black;' +
+          'grid-column: ' + column + ';' +
+          'grid-row: ' + row + ';');
         divs[i].textContent = i;
         container.appendChild(divs[i]);
         console.log(divs[i]);
@@ -41,6 +44,13 @@
       }
     }
     addDivGrid();
+    const grids = document.querySelectorAll('.grid');
+    grids.forEach((grid) => {
+      grid.addEventListener('mouseover', () => {
+        console.log(grid);
+        grid.style.cssText = 'background: red;';
+      });
+    });
   </script>
 
 </body>
