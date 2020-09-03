@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Page Title</title>
+  <meta charset="UTF-8"/>
+</head>
+<body>
+  <h1> 
+    THE TITLE OF YOUR WEBPAGE
+  </h1>
+  <div id="container" style="display: grid;
+                              grid-template-columns: repeat(4, 1fr);
+                              grid-gap: 5px;"></div>
+  <script>
+    const container = document.querySelector('#container');
+    function addDivGrid(){
+      const GRIDSIZE = 16;
+      let row = 1;
+      let column = 0;
+      let gridSqr = Math.sqrt(GRIDSIZE);
+      let divs = [];
+      for(i = 0; i < GRIDSIZE; i++){
+        //increases the rows resets the columns
+        if (gridSqr === column)
+        {
+          row++;
+          column = 1;
+        }
+        else column++;
+
+        divs.push('div'+i);
+        divs[i] = document.createElement('div');
+        divs[i].classList.add('grid');
+        divs[i].style.cssText = 'width: 5px; background: pink; border: 1px solid black';
+        divs[i].style.cssText = 'grid-column: ' + column;
+        divs[i].style.cssText = 'grid-row: ' + row;
+        divs[i].textContent = i;
+        container.appendChild(divs[i]);
+        console.log(divs[i]);
+        console.log('row: '+ row + ' column: ' + column);
+      }
+    }
+    addDivGrid();
+  </script>
+
+</body>
+</html>
