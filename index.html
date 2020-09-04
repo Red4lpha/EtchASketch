@@ -6,7 +6,7 @@
 </head>
 <body>
   <h1> 
-    THE TITLE OF YOUR WEBPAGE
+    ETCH - A - SKETCH
   </h1>
   <div id="container" style="display: grid;
                               ">
@@ -18,8 +18,10 @@
     function addDivGrid(){
       container.setAttribute ('style', 
           'display: grid;' +
-          'grid-template-columns: repeat(' + gridSize + ', 20px);' + 
-          'grid-template-rows: repeat(' + gridSize + ', 20px);'); 
+          'width: 350px;' +
+          'height: 350px;' +
+          'grid-template-columns: repeat(' + gridSize + ', ' + 350/gridSize + 'px);' + 
+          'grid-template-rows: repeat(' + gridSize + ', auto);'); 
       
       for(i = 0; i < gridSize*gridSize; i++){ setGridDivInfo(i) }
     }
@@ -29,6 +31,7 @@
       divs[i].setAttribute ('style', 
         'background: blue;' +
         'border: 1px solid black;');
+      //divs[i].textContent = i;
       container.appendChild(divs[i]);
      // console.log(divs[i]);
     }
