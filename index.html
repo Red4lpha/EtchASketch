@@ -9,46 +9,38 @@
     THE TITLE OF YOUR WEBPAGE
   </h1>
   <div id="container" style="display: grid;
-                              grid-template-columns: repeat(4, 1fr);
-                              grid-gap: 5px;">
+                              ">
                               </div>
   <script>
     const container = document.querySelector('#container');
+    let divs = [];
+    let gridSize = 16;
     function addDivGrid(){
-      const GRIDSIZE = 16;
-      let row = 1;
-      let column = 0;
-      let gridSqr = Math.sqrt(GRIDSIZE);
-      let divs = [];
-      for(i = 0; i < GRIDSIZE; i++){
-        //increases the rows resets the columns
-        if (gridSqr === column)
-        {
-          row++;
-          column = 1;
-        }
-        else column++;
-
-        //divs.push('div'+i);
-        divs[i] = document.createElement('div');
-        divs[i].classList.add('grid');
-        divs[i].setAttribute ('style', 
-          'background: blue;' +
-          'border: 1px solid black;' +
-          'grid-column: ' + column + ';' +
-          'grid-row: ' + row + ';');
-        divs[i].textContent = i;
-        container.appendChild(divs[i]);
-        console.log(divs[i]);
-        console.log('row: '+ row + ' column: ' + column);
-      }
+      container.setAttribute ('style', 
+          'display: grid;' +
+          'grid-template-columns: repeat(' + gridSize + ', 20px);' + 
+          'grid-template-rows: repeat(' + gridSize + ', 20px);'); 
+      
+      for(i = 0; i < gridSize*gridSize; i++){ setGridDivInfo(i) }
     }
+    function setGridDivInfo(i){
+      divs[i] = document.createElement('div');
+      divs[i].classList.add('grid');
+      divs[i].setAttribute ('style', 
+        'background: blue;' +
+        'border: 1px solid black;');
+      container.appendChild(divs[i]);
+     // console.log(divs[i]);
+    }
+
+
     addDivGrid();
     const grids = document.querySelectorAll('.grid');
     grids.forEach((grid) => {
       grid.addEventListener('mouseover', () => {
-        console.log(grid);
-        grid.style.cssText = 'background: red;';
+        //console.log(grid);
+        grid.removeAttribute('background: blue;');
+        grid.style.background = 'red';
       });
     });
   </script>
