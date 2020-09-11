@@ -8,22 +8,30 @@
   <h1> 
     ETCH - A - SKETCH
   </h1>
+  <button id="btnClear">Clear Grid</button>
   <div id="container" style="display: grid;
                               ">
                               </div>
   <script>
     const container = document.querySelector('#container');
+    const btnClear = document.querySelector('#btnClear');
     let divs = [];
     let gridSize = 16;
-    function addDivGrid(){
+    const height = 350;
+    const width = 350;
+    function addDivGrid(newSize){
       container.setAttribute ('style', 
           'display: grid;' +
-          'width: 350px;' +
-          'height: 350px;' +
-          'grid-template-columns: repeat(' + gridSize + ', ' + 350/gridSize + 'px);' + 
-          'grid-template-rows: repeat(' + gridSize + ', auto);'); 
+          'width: ' + width +'px;' +
+          'height: ' + height + 'px;' +
+          'grid-template-columns: repeat(' + newSize + ', ' + width/newSize + 'px);' + 
+          'grid-template-rows: repeat(' + newSize + ', auto);'); 
       
-      for(i = 0; i < gridSize*gridSize; i++){ setGridDivInfo(i) }
+      for(i = 0; i < newSize*newSize; i++){ setGridDivInfo(i) }
+      let grids = document.querySelectorAll('.grid');
+      grids.forEach((grid) => {
+        grid.addEventListener('mouseover', hover);
+    });
     }
     function setGridDivInfo(i){
       divs[i] = document.createElement('div');
@@ -36,16 +44,29 @@
      // console.log(divs[i]);
     }
 
+    function removeAllChildren(){
+      while (container.firstChild) {
+        //console.log(container.firstChild);
+        container.removeChild(container.firstChild);  
+        }
+    }
 
-    addDivGrid();
-    const grids = document.querySelectorAll('.grid');
-    grids.forEach((grid) => {
-      grid.addEventListener('mouseover', () => {
-        //console.log(grid);
-        grid.removeAttribute('background: blue;');
-        grid.style.background = 'red';
+    addDivGrid(gridSize);
+    //btnClear.onclick = () => addDivGrid(20);
+    btnClear.addEventListener('click', () => {
+        //console.log("btnClear clicked");
+        removeAllChildren();
+        divs = [];
+        addDivGrid(10);
+        
       });
-    });
+  
+    function hover(e){
+        //console.log(e.target);
+        e.target.removeAttribute('background: blue;');
+        e.target.style.background = 'red';
+    }  
+
   </script>
 
 </body>
