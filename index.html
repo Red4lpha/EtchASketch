@@ -28,7 +28,7 @@
           'grid-template-rows: repeat(' + newSize + ', auto);'); 
       
       for(i = 0; i < newSize*newSize; i++){ setGridDivInfo(i) }
-      let grids = document.querySelectorAll('.grid');
+      const grids = document.querySelectorAll('.grid');
       grids.forEach((grid) => {
         grid.addEventListener('mouseover', hover);
     });
@@ -57,7 +57,8 @@
         //console.log("btnClear clicked");
         removeAllChildren();
         divs = [];
-        addDivGrid(10);
+        let newSize = window.prompt("Enter a new value for the grid side:", "16");
+        addDivGrid(newSize);
         
       });
   
