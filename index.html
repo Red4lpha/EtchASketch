@@ -9,9 +9,15 @@
     ETCH - A - SKETCH
   </h1>
   <button id="btnClear">Clear Grid</button>
-  <div id="container" style="display: grid;
-                              ">
-                              </div>
+  <div id="container"></div>
+  <style>
+    #container {
+      display: grid;
+      border-color: black;
+      border-width: 5px;
+    }
+  </style>
+  
   <script>
     const container = document.querySelector('#container');
     const btnClear = document.querySelector('#btnClear');
@@ -20,13 +26,11 @@
     const height = 350;
     const width = 350;
     function addDivGrid(newSize){
-      container.setAttribute ('style', 
-          'display: grid;' +
-          'width: ' + width +'px;' +
-          'height: ' + height + 'px;' +
-          'grid-template-columns: repeat(' + newSize + ', ' + width/newSize + 'px);' + 
-          'grid-template-rows: repeat(' + newSize + ', auto);'); 
-      
+
+      container.style.width = width +'px';
+      container.style.height = height +'px';
+      container.style.gridTemplateColumns = 'repeat(' + newSize + ', ' + width/newSize + 'px)';
+      container.style.gridTemplateRows = 'repeat(' + newSize + ', auto)';
       for(i = 0; i < newSize*newSize; i++){ setGridDivInfo(i) }
       const grids = document.querySelectorAll('.grid');
       grids.forEach((grid) => {
@@ -37,7 +41,7 @@
       divs[i] = document.createElement('div');
       divs[i].classList.add('grid');
       divs[i].setAttribute ('style', 
-        'background: blue;' +
+        'background: white;' +
         'border: 1px solid black;');
       //divs[i].textContent = i;
       container.appendChild(divs[i]);
@@ -55,17 +59,20 @@
     //btnClear.onclick = () => addDivGrid(20);
     btnClear.addEventListener('click', () => {
         //console.log("btnClear clicked");
-        removeAllChildren();
-        divs = [];
-        let newSize = window.prompt("Enter a new value for the grid side:", "16");
-        addDivGrid(newSize);
+        let newSize = window.prompt("Enter a new value for the grid side(1-64):", "16");
+        if (newSize < 1 || newSize > 64 || newSize === NaN) {alert("Error: Incorrect value");}
+        else {
+          removeAllChildren();
+          divs = [];
+          addDivGrid(newSize);
+          }
         
       });
   
     function hover(e){
         //console.log(e.target);
-        e.target.removeAttribute('background: blue;');
-        e.target.style.background = 'red';
+        e.target.removeAttribute('background: white;');
+        e.target.style.background = 'black';
     }  
 
   </script>
