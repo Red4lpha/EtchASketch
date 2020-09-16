@@ -5,32 +5,70 @@
   <meta charset="UTF-8"/>
 </head>
 <body>
-  <h1> 
-    ETCH - A - SKETCH
-  </h1>
-  <button id="btnClear">Clear Grid</button>
-  <div id="container"></div>
+  <div class="container">
+    <h1> 
+      ETCH - A - SKETCH
+    </h1>
+    <div class="buttonContainer">
+      <button id="btnReset">Reset Grid Size</button>
+      <button id="btnClear">Clear Grid</button>
+    </div>
+    <div id="gridContainer"></div>
+  </div>
   <style>
-    #container {
+    #gridContainer {
       display: grid;
-      border-color: black;
-      border-width: 5px;
+      border: 5px solid black;
+      margin: auto;
+      padding: 10px;
+    }
+    #btnClear {
+      margin: auto;
+    }
+    h1 {
+        text-align: center;
+    }
+
+    .container {
+      margin: auto;
+    }
+
+    .buttonContainer {
+      margin: auto;
+      text-align: center;
     }
   </style>
   
   <script>
-    const container = document.querySelector('#container');
+    const gridContainer = document.querySelector('#gridContainer');
     const btnClear = document.querySelector('#btnClear');
+    const btnReset = document.querySelector('#btnReset');
     let divs = [];
     let gridSize = 16;
     const height = 350;
     const width = 350;
+    
+    addDivGrid(gridSize);
+    //btnClear.onclick = () => addDivGrid(20);
+    btnReset.addEventListener('click', () => {
+        //console.log("btnReset clicked");
+        let newSize = window.prompt("Enter a new value for the grid side(1-64):", "16");
+        if (newSize < 1 || newSize > 64 || newSize === NaN) {alert("Error: Incorrect value");}
+        else {
+          removeAllChildren();
+          divs = [];
+          addDivGrid(newSize);
+          }
+        
+      });
+    
+    
     function addDivGrid(newSize){
 
-      container.style.width = width +'px';
-      container.style.height = height +'px';
-      container.style.gridTemplateColumns = 'repeat(' + newSize + ', ' + width/newSize + 'px)';
-      container.style.gridTemplateRows = 'repeat(' + newSize + ', auto)';
+      gridContainer.style.width = width +'px';
+      gridContainer.style.height = height +'px';
+      gridContainer.style.gridTemplateColumns = 'repeat(' + newSize + ', ' + width/newSize + 'px)';
+      gridContainer.style.gridTemplateRows = 'repeat(' + newSize + ', auto)';
       for(i = 0; i < newSize*newSize; i++){ setGridDivInfo(i) }
       const grids = document.querySelectorAll('.grid');
       grids.forEach((grid) => {
@@ -44,31 +82,16 @@
         'background: white;' +
         'border: 1px solid black;');
       //divs[i].textContent = i;
-      container.appendChild(divs[i]);
+      gridContainer.appendChild(divs[i]);
      // console.log(divs[i]);
     }
 
     function removeAllChildren(){
-      while (container.firstChild) {
-        //console.log(container.firstChild);
-        container.removeChild(container.firstChild);  
+      while (gridContainer.firstChild) {
+        //console.log(gridContainer.firstChild);
+        gridContainer.removeChild(gridContainer.firstChild);  
         }
     }
-
-    addDivGrid(gridSize);
-    //btnClear.onclick = () => addDivGrid(20);
-    btnClear.addEventListener('click', () => {
-        //console.log("btnClear clicked");
-        let newSize = window.prompt("Enter a new value for the grid side(1-64):", "16");
-        if (newSize < 1 || newSize > 64 || newSize === NaN) {alert("Error: Incorrect value");}
-        else {
-          removeAllChildren();
-          divs = [];
-          addDivGrid(newSize);
-          }
-        
-      });
-  
     function hover(e){
         //console.log(e.target);
         e.target.removeAttribute('background: white;');
