@@ -10,8 +10,8 @@
       ETCH - A - SKETCH
     </h1>
     <div class="buttonContainer">
-      <button id="btnReset">Reset Grid Size</button>
-      <button id="btnClear">Clear Grid</button>
+      <button id="btnReset" class="btn">Reset Grid Size</button>
+      <button id="btnClear" class="btn">Clear Grid</button>
     </div>
     <div id="gridContainer"></div>
   </div>
@@ -21,9 +21,6 @@
       border: 5px solid black;
       margin: auto;
       padding: 10px;
-    }
-    #btnClear {
-      margin: auto;
     }
     h1 {
         text-align: center;
@@ -36,6 +33,19 @@
     .buttonContainer {
       margin: auto;
       text-align: center;
+      padding-bottom: 5px;
+      
+    }
+
+    .btn {
+      border: 2px solid black;
+      background-color: white;
+      color: black;
+      cursor: pointer;
+    }
+    .btn:hover {
+      background-color: black;
+      color: white;
     }
   </style>
   
@@ -45,6 +55,7 @@
     const btnReset = document.querySelector('#btnReset');
     let divs = [];
     let gridSize = 16;
+    let newGridSize = gridSize;
     const height = 350;
     const width = 350;
     
@@ -55,14 +66,19 @@
         let newSize = window.prompt("Enter a new value for the grid side(1-64):", "16");
         if (newSize < 1 || newSize > 64 || newSize === NaN) {alert("Error: Incorrect value");}
         else {
-          removeAllChildren();
-          divs = [];
-          addDivGrid(newSize);
-          }
-        
-      });
-    
-    
+          newGridSize = newSize;
+          clearGrid(newSize);
+          }  
+    });
+    btnClear.addEventListener('click', () => {
+        clearGrid(newGridSize); 
+    });
+
+    function clearGrid(newSize){
+      removeAllChildren();
+      divs = [];
+      addDivGrid(newSize);
+    }
     function addDivGrid(newSize){
 
       gridContainer.style.width = width +'px';
