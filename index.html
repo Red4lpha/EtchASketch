@@ -12,6 +12,10 @@
     <div class="buttonContainer">
       <button id="btnReset" class="btn">Reset Grid Size</button>
       <button id="btnClear" class="btn">Clear Grid</button>
+      <input type="radio" id="rdHover" name="mouseOption" value="hover" checked>
+      <label for="hover">Hover</label>
+      <input type="radio" id="rdDrag" name="mouseOption" value="drag">
+      <label for="drag">Drag</label>     
     </div>
     <div id="gridContainer"></div>
   </div>
@@ -34,7 +38,6 @@
       margin: auto;
       text-align: center;
       padding-bottom: 5px;
-      
     }
 
     .btn {
@@ -42,6 +45,7 @@
       background-color: white;
       color: black;
       cursor: pointer;
+      border-radius: 3px;
     }
     .btn:hover {
       background-color: black;
@@ -53,6 +57,12 @@
     const gridContainer = document.querySelector('#gridContainer');
     const btnClear = document.querySelector('#btnClear');
     const btnReset = document.querySelector('#btnReset');
+    const rdDrag = document.getElementById('rdDrag');
+    const rdHover = document.getElementById('rdHover');
+    rdDrag.onclick = function(){
+      console.log("Drag clicked");
+    }
+
     let divs = [];
     let gridSize = 16;
     let newGridSize = gridSize;
@@ -86,10 +96,14 @@
       gridContainer.style.gridTemplateColumns = 'repeat(' + newSize + ', ' + width/newSize + 'px)';
       gridContainer.style.gridTemplateRows = 'repeat(' + newSize + ', auto)';
       for(i = 0; i < newSize*newSize; i++){ setGridDivInfo(i) }
+      
+      //set up listener for mouseover
       const grids = document.querySelectorAll('.grid');
       grids.forEach((grid) => {
         grid.addEventListener('mouseover', hover);
-    });
+        grid.addEventListener('click', drag);
+        grid.addEventListener('mousedown', drag);
+      });
     }
     function setGridDivInfo(i){
       divs[i] = document.createElement('div');
@@ -110,9 +124,21 @@
     }
     function hover(e){
         //console.log(e.target);
+        if(rdHover.checked){
+          e.target.removeAttribute('background: white;');
+          e.target.style.background = 'black';
+        }
+        else  {return;}
+    }  
+
+    function drag(e){
+      if(rdDrag.checked){
+        console.log(e.target);
         e.target.removeAttribute('background: white;');
         e.target.style.background = 'black';
-    }  
+      }
+        else  {return;}
+    } 
 
   </script>
 
