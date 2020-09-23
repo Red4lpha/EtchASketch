@@ -66,8 +66,13 @@
     let divs = [];
     let gridSize = 16;
     let newGridSize = gridSize;
+    let mouseDown = 0
     const height = 350;
     const width = 350;
+    document.body.onmousedown = function(){++mouseDown;}
+    document.body.onmouseup = function(){--mouseDown;}
+
+
     
     addDivGrid(gridSize);
     //btnClear.onclick = () => addDivGrid(20);
@@ -102,7 +107,6 @@
       grids.forEach((grid) => {
         grid.addEventListener('mouseover', hover);
         grid.addEventListener('click', drag);
-        grid.addEventListener('mousedown', drag);
       });
     }
     function setGridDivInfo(i){
@@ -123,8 +127,8 @@
         }
     }
     function hover(e){
-        //console.log(e.target);
-        if(rdHover.checked){
+        //console.log(mouseDown);
+        if(rdHover.checked || mouseDown == 1){
           e.target.removeAttribute('background: white;');
           e.target.style.background = 'black';
         }
@@ -133,7 +137,7 @@
 
     function drag(e){
       if(rdDrag.checked){
-        console.log(e.target);
+        //console.log(e.target);
         e.target.removeAttribute('background: white;');
         e.target.style.background = 'black';
       }
