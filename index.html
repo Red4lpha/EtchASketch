@@ -66,11 +66,11 @@
     let divs = [];
     let gridSize = 16;
     let newGridSize = gridSize;
-    let mouseDown = 0
     const height = 350;
     const width = 350;
-    document.body.onmousedown = function(){++mouseDown;}
-    document.body.onmouseup = function(){--mouseDown;}
+    //let mouseDown = 0
+    //document.body.onmousedown = function(){++mouseDown;}
+    //document.body.onmouseup = function(){--mouseDown;}
 
 
     
@@ -106,6 +106,7 @@
       const grids = document.querySelectorAll('.grid');
       grids.forEach((grid) => {
         grid.addEventListener('mouseover', hover);
+        //grid.addEventListener('mousemove', hover);
         grid.addEventListener('click', drag);
       });
     }
@@ -127,8 +128,8 @@
         }
     }
     function hover(e){
-        //console.log(mouseDown);
-        if(rdHover.checked || mouseDown == 1){
+        console.log(e.buttons);
+        if(rdHover.checked || e.buttons == 1){
           e.target.removeAttribute('background: white;');
           e.target.style.background = 'black';
         }
